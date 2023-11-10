@@ -1,0 +1,59 @@
+<?php
+
+include "koneksi.php";
+
+// Menentukan metode request
+$method = $_SERVER['REQUEST_METHOD'];
+
+header('Content-Type: application/json');
+
+switch($method) {
+    case 'GET':
+        $sql = "SELECT * FROM wisatasemarang";
+        $stmt = $pdo->query($sql);
+        $wisatasemarang = $stmt->fetchAll();
+        echo json_encode($wisatasemarang);
+        break;
+
+    case 'POST':
+        $data = json_decode(file_get_contents("php://input"));
+        if(isset($data->nama) && isset($data->kategori) && isset($data->lokasi)) {
+            $sql = "INSERT INTO wisatasemarang (nama, kategori, lokasi) VALUES (?, ?, ?)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$data->nama, $data->kategori, $data->lokasi]);
+            echo json_encode(['message' => 'Data berhasil ditambahkan']);
+        } else {
+            echo json_encode(['message' => 'Data tidak lengkap']);
+        }
+        break;
+
+    case 'PUT':
+        $data = json_decode(file_get_contents("php://input"));
+        if(isset($data->id) && isset($data->nama) && isset($data->kategori) && isset($data->lokasi)) {
+            $sql = "UPDATE wisatasemarang SET nama=?, kategori=?, lokasi=?, WHERE id=?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$data->nama, $data->kategori, $data->lokasi, $data->id]);
+            echo json_encode(['message' => 'Data berhasil diperbarui']);
+        } else {
+            echo json_encode(['message' => 'Data tidak lengkap']);
+        }
+        break;
+
+    case 'DELETE':
+        $data = json_decode(file_get_contents("php://input"));
+        if(isset($data->id)) {
+            $sql = "DELETE FROM wisatasemarang WHERE id=?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$data->id]);
+            echo json_encode(['message' => 'Data berhasil dihapus']);
+        } else {
+            echo json_encode(['message' => 'ID tidak ditemukan']);
+        }
+        break;
+
+    default:
+        echo json_encode(['message' => 'Metode tidak dikenali']);
+        break;
+}
+
+?>
