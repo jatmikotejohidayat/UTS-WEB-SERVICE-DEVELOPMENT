@@ -1,0 +1,28 @@
+//menambahkan data pada postman
+[
+{
+    "nama": "kota lama",
+    "kategori": "Bangunan bersejarah",
+    "lokasi": "semarang"
+},
+{
+    "nama": "Lawang Sewu",
+    "kategori": "Bangunan bersejarah",
+    "lokasi": "semarang"
+},
+{
+    "nama": "Pantai Marina",
+    "kategori": "Wisata Alam",
+    "lokasi": "semarang"
+},
+{
+    "nama": "Lapangan Pancasila",
+    "kategori": "Wisata Kota",
+    "lokasi": "semarang"
+},
+{
+    "nama": "Brown Canyon",
+    "kategori": "Wisata Alam",
+    "lokasi": "semarang"
+}
+]
